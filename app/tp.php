@@ -14,8 +14,9 @@ class tp extends Model
     }
 
     public function user(){
-        return $this->hasMany(user::class);
+        return $this->hasMany(User::class);
     }
+    
 
     public function people(){
         return $this->hasMany(people::class);

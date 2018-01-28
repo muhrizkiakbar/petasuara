@@ -40,29 +40,34 @@ class CreateUsersTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namarole');
+            $table->timestamps();
         });
 
         Schema::create('kabupatens', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namakabupaten');
+            $table->timestamps();
 
         });
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namakecamatan');
             $table->unsignedInteger('kabupaten_id');
+            $table->timestamps();
         });
 
         Schema::create('desas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namadesas');
             $table->unsignedInteger('kecamatan_id');
+            $table->timestamps();
         });
 
         Schema::create('tps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namatps');
             $table->unsignedInteger('desa_id');
+            $table->timestamps();
         });
 
         Schema::table('users',function (Blueprint $table){
@@ -79,7 +84,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::table('desas',function (Blueprint $table){
-            $table->foreign('kecamatan_id')->references('id')->on('kabupatens')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kecamatan_id')->references('id')->on('kecamatans ')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::table('tps',function (Blueprint $table){

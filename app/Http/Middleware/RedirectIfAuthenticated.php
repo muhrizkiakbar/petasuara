@@ -24,14 +24,17 @@ class RedirectIfAuthenticated
             }
             elseif ((Auth::user()->role->namarole=="timses"))
             {
-              return redirect('/home/timses');
+              return redirect('/home');
+            }
+            elseif ((Auth::user()->role->namarole=="timdes"))
+            {
+              return redirect('/home');
             }
             elseif ((Auth::user()->role->namarole=="superadmin"))
             {
-              return redirect('/home/admin');
+              return redirect('/home');
             }
   
-              //return redirect('/home');
           }
   
           return $next($request);

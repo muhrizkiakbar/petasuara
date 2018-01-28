@@ -87,6 +87,7 @@
                                                 <label>Level</label>
                                                 <select class="form-control select2" id="role_id" name="role_id" style="width: 100%;">
                                                     @foreach($roles as $role)
+
                                                         <option value="{{$role->id}}">{{$role->namarole}}</option>
                                                     @endforeach
                                                 </select>
@@ -250,13 +251,11 @@
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
-    {{--<script src="{{asset('dist/js/demo.js')}}"></script>--}}
     <!-- Page script -->
     <script>
         $(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
-
         })
     </script>
     <script type="text/javascript">
@@ -288,8 +287,6 @@
             $('#namauser').val("");
             $('#nohpuser').val("");
             $('#alamatuser').val("");
-            $('#tps_id').val("");
-            $('#role_id').val("");
             $('#modal_add').modal("show");
         });
     </script>

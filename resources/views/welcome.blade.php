@@ -50,7 +50,7 @@
                             </div>
                         @endif
                     @endif
-                        <p><small>Dikembangkan oleh <a href="diskominfo.kalselprov.go.id">Akbar</a> &copy; 2018</small></p>
+                        <p><small>Dikembangkan oleh <a href="diskominfo.kalselprov.go.id">Akbar & Cahya</a> &copy; 2018</small></p>
                     </div>
                     <!-- /.col -->
                 </div>

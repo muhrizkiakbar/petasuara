@@ -13,11 +13,11 @@ class HakAksesMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next,...$namaRole)
+    public function handle($request, Closure $next,...$namarole)
     {
       // dd(auth()->user()->punyaRule($namaRole));
       // dd(auth()->check() && auth()->user()->punyaRule($namaRole) == true);
-        if(auth()->check() && auth()->user()->punyaRule($namaRole) == true){
+        if(auth()->check() && auth()->user()->punyaRule($namarole) == true){
             return $next($request);
         }
         else

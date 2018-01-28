@@ -29,6 +29,7 @@ class UserController extends Controller
         $tps=tp::leftJoin('desas','tps.desa_id','=','desas.id')
             ->leftJoin('kecamatans','desas.kecamatan_id','=','kecamatans.id')
             ->leftJoin('kabupatens','kecamatans.kabupaten_id','=','kabupatens.id')
+            ->select('tps.*','desas.namadesas','kecamatans.namakecamatan','kabupatens.namakabupaten')
             ->get();
         return view('user.manajemenuser',['roles'=>$role,'tps'=>$tps]);
     }
@@ -87,6 +88,7 @@ class UserController extends Controller
                 $user->password = bcrypt($request->password);
                 $user->role_id = $request->role_id;
                 $user->namauser=$namauser;
+                $user->noktpuser=$noktpuser;
                 $user->alamatuser=$alamatuser;
                 $user->nohpuser=$nohpuser;
                 $user->tps_id=$tps_id;
@@ -116,7 +118,7 @@ class UserController extends Controller
                 ->leftJoin('desas','tps.desa_id','=','desas.id')
                 ->leftJoin('kecamatans','desas.kecamatan_id','=','kecamatans.id')
                 ->leftJoin('kabupatens','kecamatans.kabupaten_id','=','kabupatens.id')
-                ->select('users.*','roles.namarole',DB::raw('CONCAT(kabupatens.namakabupaten," >> ",kecamatans.namakecamatan," >> ",desas.namadesas) as lokasi'))
+                ->select('users.*','roles.namarole',DB::raw('CONCAT(kabupatens.namakabupaten," >> ",kecamatans.namakecamatan," >> ",desas.namadesas," >> ",tps.namatps) as lokasi'))
                 ->get();
 
         return Datatables::of($users)
@@ -178,6 +180,7 @@ class UserController extends Controller
                 $user=User::where('username','=',$username)->first();
                 $user->username = $request->username2;
                 $user->role_id = $request->role_id2;
+                $user->noktpuser=$noktpuser;
                 $user->namauser=$namauser;
                 $user->alamatuser=$alamatuser;
                 $user->nohpuser=$nohpuser;
@@ -203,4 +206,35 @@ class UserController extends Controller
         $table->delete();
         return response()->json($table);
     }
+
+    public function indexchange(){
+
+        return view('user.changepassword');
+        
+      }
+
+    public function changepassword(Request $request){
+
+        // dd("asdads");
+            $this->validate($request, [
+                'password' => 'required',
+                'passwordbaru' => 'required|string|min:8',
+                'konfirmasipassword' => 'required|string|min:8|same:passwordbaru'
+            ]);
+  
+            if (Hash::check($request->password,Hash::make($request->password))) {
+              // dd("berubah");
+              request()->user()->fill([
+                  'password' => Hash::make(request()->input('passwordbaru'))
+              ])->save();
+  
+              return redirect()->back()->with('statussucces','Password berhasil di ubah.');
+            }
+            else{
+              return redirect()->back()->with('statuserror','Password Salah');
+            }
+  
+            // return redirect()->route('password.change');
+  
+      }
 }

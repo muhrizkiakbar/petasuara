@@ -12,6 +12,7 @@
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
 <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
+<link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 @endpush
 
 @section('body')
@@ -39,17 +40,16 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
-                        <form action="/jadwalkerja/add" method="post">
+                        <form action="/kabupaten" method="post">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Kabupaten/Kota</label>
-                                        <input id="namakabupaten" name="namakabupaten" type="text" class="form-control" placeholder="Shift1/Shift2">
-                                        <!-- <input id="instansi_id" name="instansi_id" type="hidden" value="{{ Auth::user()->instansi_id }}"> -->
+                                        <input id="namakabupaten" name="namakabupaten" type="text" class="form-control" placeholder="Nama Kabupaten">
                                     </div>
                                 </div>
                             </div>
+                            {{csrf_field()}}
                             
                             <div class="row">
                                 <div class="col-xs-12">
@@ -67,7 +67,7 @@
                 <!-- Table jadwal kerja -->
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tabel Aturan Jam Kerja</h3>
+                        <h3 class="box-title">Manajemen Kabupaten</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -81,25 +81,13 @@
                                 <div class="box">
                                     <!-- /.box-header -->
                                     <div class="box-body no-padding">
-                                        <table class="table table-striped">
+                                        <table id="tablekabupaten" class="table table-striped table-responsive">
+                                            <thead>
                                             <tr>
-                                                <th>Jam Masuk</th>
-                                                <th>Jam Keluar</th>
-                                                <th>Jadwal Kerja</th>
-                                                <th>Instansi</th>
+                                                <th>Kabupaten/Kota</th>
                                                 <th>Aksi</th>
                                             </tr>
-                                                @foreach($jadwalkerjas as $jadwalkerja)
-                                                    <tr>
-                                                    <td>{{ $jadwalkerja->jam_masukjadwal }}</td>
-                                                    <td>{{ $jadwalkerja->jam_keluarjadwal }}</td>
-                                                    <td>{{ $jadwalkerja->jenis_jadwal }}</td>
-                                                    <td>{{ $jadwalkerja->namaInstansi }}</td>
-                                                    <td><a class="btn-sm btn-success" href="/jadwalkerja/{{ encrypt($jadwalkerja->id) }}/edit">Edit</a>
-                                                        <a class="btn-sm btn-danger" data-method="delete"
-                                                           data-token="{{csrf_token()}}" href="/jadwalkerja/{{ encrypt($jadwalkerja->id) }}/hapus">Hapus</a></td>
-                                                    </tr>
-                                                @endforeach
+                                            </thead>    
 
                                         </table>
                                     </div>
@@ -118,7 +106,7 @@
                 <!-- Atur Jadwal Sebelum Masuk Kerja -->
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Atur Jam Kerja</h3>
+                        <h3 class="box-title">Kecamatan</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -127,41 +115,29 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/rulejadwalkerja" method="post">
+                        <form action="/kecamatan" method="post">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Jam Mulai Masuk Kerja</label>
-                                        <div class="input-group bootstrap-timepicker timepicker">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-clock-o"></i>
-                                            </div>
-                                            <input id="awalmasuk" readonly name="awalmasuk" class="form-control pull-right" type="text">
-                                        </div>
+                                        <label>Kecamatan</label>
+                                        <input id="namakecamatan" name="namakecamatan" class="form-control" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <label>Jam Batas Pulang Kerja</label>
-                                        <div class="input-group bootstrap-timepicker timepicker">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-clock-o"></i>
-                                            </div>
-                                            <input id="bataspulang" readonly name="bataspulang" class="form-control pull-right" type="text">
-                                        </div>
+                                        <label>Kabupaten/Kota</label>
+                                        <select class="form-control select2" id="kabupaten_id" name="kabupaten_id" style="width: 100%;">
+                                            @foreach($kabupatens as $kabupaten)
+                                                <option value="{{$kabupaten->id}}">{{$kabupaten->namakabupaten}}</option>
+                                            @endforeach
+                                        </select>
                                         {{csrf_field()}}
                                     </div>
-                                    <div class="form-group">
-                                        <label>Jenis Jadwal</label>
-                                            <select class="form-control select2" name="jadwalkerjamasuk[]" id="jadwalkerjamasuk">
-
-                                            </select>
-                                        <input id="instansi_id" name="instansi_id" type="hidden" value="{{ Auth::user()->instansi_id }}">
-                                    </div>
+                                    
                                     <!-- /.form-group -->
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button type="submit" class="btn btn-primary btn-flat">Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
                                 </div>
                             </div>
                         </form>
@@ -170,12 +146,10 @@
                     </div>
                 </div>
                 <!-- /.box -->
-
-
-                <!-- Table jadwal Sebelum kerja -->
+                <!-- Table jadwal kerja -->
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tabel Aturan Jam Kerja</h3>
+                        <h3 class="box-title">Manajemen Kecamatan</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -186,47 +160,17 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-8">
-                                </div>
-                                <div class="col-md-4">
-                                    <form action="/jadwalkerja" method="post">
-                                        {{csrf_field()}}
-                                        @if ($cari=="")
-                                        <input type="text" name="cari" placeholder="Jadwal/Instansi">
-                                        @else
-                                        <input type="text" name="cari" placeholder="Jadwal/Instansi" value="{{$cari}}">
-                                        @endif
-                                        <button type="submit" name="button"><i class="fa fa-search"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="box">
                                     <!-- /.box-header -->
                                     <div class="box-body no-padding">
-                                        <table class="table table-striped">
+                                        <table id="tablekecamatan" class="table table-striped table-responsive">
+                                            <thead>
                                             <tr>
-                                                <th>Jam Masuk</th>
-                                                <th>Jam Keluar</th>
-                                                <th>Jenis Jadwal</th>
-                                                <th>Instansi</th>
+                                                <th>Kabupaten</th>
+                                                <th>Kecamatan</th>
                                                 <th>Aksi</th>
                                             </tr>
-
-                                                @foreach($rules as $rule)
-                                                <tr>
-                                                    <td>{{ $rule->jamsebelum_masukkerja }}</td>
-                                                    <td>{{ $rule->jamsebelum_pulangkerja }}</td>
-                                                    <td>{{ $rule->jenis_jadwal }}</td>
-                                                    <td>{{ $rule->namaInstansi }}</td>
-                                                    <td><a class="btn-sm btn-success" href="/rulejadwalkerja/{{ encrypt($rule->id) }}/edit">Edit</a>
-                                                        <a class="btn-sm btn-danger" data-method="delete"
-                                                           data-token="{{csrf_token()}}" href="/rulejadwalkerja/{{ encrypt($rule->id) }}/hapus">Hapus</a></td>
-                                                </tr>
-                                                @endforeach
+                                            </thead>
 
                                         </table>
                                     </div>
@@ -237,15 +181,174 @@
                         </div>
                         <!-- /.row -->
                     </div>
-
-                    <div class="box-footer clearfix">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            {{$rules->appends(['cari'=>($cari)])->links()}}
-                        </ul>
-                    </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Desa</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <form action="/desa" method="post">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Desa</label>
+                                        <input id="namadesas" name="namadesas" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Kecamatan</label>
+                                        <select class="form-control select2" id="kecamatan_id" name="kecamatan_id" style="width: 100%;">
+                                            @foreach($kecamatans as $kecamatan)
+                                                <option value="{{$kecamatan->id}}">{{$kecamatan->namakecamatan}}</option>
+                                            @endforeach
+                                        </select>
+                                        {{csrf_field()}}
+                                    </div>
+                                    
+                                    <!-- /.form-group -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- /.col -->
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.box -->
+                <!-- Table jadwal kerja -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Manajemen Desa</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding">
+                                        <table id="tabledesa" class="table table-striped table-responsive">
+                                            <thead>
+                                            <tr>
+                                                <th>Kabupaten</th>
+                                                <th>Kecamatan</th>
+                                                <th>Desa</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">TPS</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <form action="/tps" method="post">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>TPS</label>
+                                        <input id="namatps" name="namatps" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Desa</label>
+                                        <select class="form-control select2" id="desa_id" name="desa_id" style="width: 100%;">
+                                            @foreach($desas as $desa)
+                                                <option value="{{$desa->id}}">{{$desa->namadesas}}</option>
+                                            @endforeach
+                                        </select>
+                                        {{csrf_field()}}
+                                    </div>
+                                    
+                                    <!-- /.form-group -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- /.col -->
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.box -->
+                <!-- Table jadwal kerja -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Manajemen TPS</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding">
+                                        <table id="tabletps" class="table table-striped table-responsive">
+                                            <thead>
+                                            <tr>
+                                                <th>Kabupaten</th>
+                                                <th>Kecamatan</th>
+                                                <th>Desa</th>
+                                                <th>TPS</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+
 
                 <!-- /.row -->
 
@@ -288,15 +391,76 @@
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+
+    <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    
     <script type="text/javascript">
-        $('#awal').timepicker({
-            showMeridian:false
+        var oTable;
+        $(function() {
+            oTable = $('#tablekabupaten').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{route('datakabupaten')}}',
+                columns: [
+                    { data: 'namakabupaten', name: 'namakabupaten' },
+                    {data:'action'}
+                ]
+            });
         });
-        $('#awalmasuk').timepicker({
-            showMeridian:false
+    </script>
+
+    <script type="text/javascript">
+        var oTable;
+        $(function() {
+            oTable = $('#tablekecamatan').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{route('datakecamatan')}}',
+                columns: [
+                    { data: 'namakabupaten', name: 'namakabupaten' },
+                    { data: 'namakecamatan', name: 'namakecamatan' },
+                    {data:'action'}
+                ]
+            });
         });
     </script>
     
+    <script type="text/javascript">
+        var oTable;
+        $(function() {
+            oTable = $('#tabledesa').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{route('datadesa')}}',
+                columns: [
+                    { data: 'namakabupaten', name: 'namakabupaten' },
+                    { data: 'namakecamatan', name: 'namakecamatan' },
+                    { data: 'namadesas', name: 'namadesas' },
+                    {data:'action'}
+                ]
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+        var oTable;
+        $(function() {
+            oTable = $('#tabletps').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{route('datatps')}}',
+                columns: [
+                    { data: 'namakabupaten', name: 'namakabupaten' },
+                    { data: 'namakecamatan', name: 'namakecamatan' },
+                    { data: 'namadesas', name: 'namadesas' },
+                    { data: 'namatps', name: 'namatps' },
+                    {data:'action'}
+                ]
+            });
+        });
+    </script>
+
 
     </body>
 @endsection

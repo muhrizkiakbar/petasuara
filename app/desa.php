@@ -13,7 +13,7 @@ class desa extends Model
         return $this->belongsTo(kecamatan::class);
     }
 
-    public function tp(){
+    public function tps(){
         return $this->hasMany(tp::class);
     }
 

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Illuminate\Support\Facades\Auth;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -31,16 +33,16 @@ class User extends Authenticatable
         return $this->belongsTo(role::class);
     }
 
-    public function tp(){
+    public function tps(){
         return $this->belongsTo(tp::class);
     }
 
-    public function punyaRule($namaRole){
-        $modaluser=$this->role->namaRole;
+    public function punyaRule($namarole){
+        $modaluser=$this->role->namarole;
 
-        if (count($namaRole)== 1)
+        if (count($namarole)== 1)
         {
-            if ($this->role->namaRole == $namaRole[0])
+            if ($this->role->namarole == $namarole[0])
             {
                 return true;
             }
@@ -49,25 +51,40 @@ class User extends Authenticatable
                 return false;
             }
         }
-        elseif (count($namaRole)== 2)
+        elseif (count($namarole)== 2)
         {
-            if ($this->role->namaRole == $namaRole[0]) {
+            if ($this->role->namarole == $namarole[0]) {
                 return true;
-            } elseif ($this->role->namaRole == $namaRole[1]) {
+            } elseif ($this->role->namarole == $namarole[1]) {
                 return true;
             }  else {
                 return false;
             }
         }
-        elseif (count($namaRole)== 3)
+        elseif (count($namarole)== 3)
         {
-            if ($this->role->namaRole == $namaRole[0]) {
+            if ($this->role->namarole == $namarole[0]) {
                 return true;
-            } elseif ($this->role->namaRole == $namaRole[1]) {
+            } elseif ($this->role->namarole == $namarole[1]) {
                 return true;
-            } elseif ($this->role->namaRole == $namaRole[2]) {
+            } elseif ($this->role->namarole == $namarole[2]) {
                 return true;
             } else {
+                return false;
+            }
+        }
+        elseif (count($namarole)== 4)
+        {
+            if ($this->role->namarole == $namarole[0]) {
+                return true;
+            } elseif ($this->role->namarole == $namarole[1]) {
+                return true;
+            } elseif ($this->role->namarole == $namarole[2]) {
+                return true;
+            } elseif ($this->role->namarole == $namarole[3]) {
+                return true;
+            }
+             else {
                 return false;
             }
         }

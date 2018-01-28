@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="/home" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>EA</b></span>
+        <span class="logo-mini"><b>PS</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>e-Absen</b></span>
+        <span class="logo-lg"><b>Peta Suara</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -22,16 +22,21 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!-- <img src="{{asset('dist/img/avatarumum.png')}}" class="user-image" alt="User Image"> -->
-                        <!-- <span class="hidden-xs">Auth::user()->name</span> -->
+                        <img src="{{asset('dist/img/avatarumum.png')}}" class="user-image" alt="User Image">
+                        <span class="hidden-xs">{{Auth::user()->namauser}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <!-- <img src="{{asset('dist/img/avatarumum.png')}}" class="img-circle" alt="User Image"> -->
+                            <img src="{{asset('dist/img/avatarumum.png')}}" class="img-circle" alt="User Image">
 
                             <p>
-                                <small>Auth::user()->instansi->namaInstansi</small>
+                                {{Auth::user()->username}}
+                                @if (Auth::user()->role->namarole=="timses")
+                                <small>{{Auth::user()->tps->desa->namadesas}} - {{Auth::user()->tps->namatps}}</small>
+                                @elseif (Auth::user()->role->namarole=="timdes")
+                                <small>{{Auth::user()->tps->desa->namadesas}}</small>
+                                @endif
                             </p>
                         </li>
                         <!-- Menu Body -->
