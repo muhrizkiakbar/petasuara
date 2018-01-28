@@ -73,10 +73,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('users',function (Blueprint $table){
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('tps_id')->references('id')->on('tps')->onDelete('cascade')->onUpdate('cascade');
-        });
+        
 
         Schema::table('kecamatans',function (Blueprint $table){
             $table->foreign('kabupaten_id')->references('id')->on('kabupatens')->onDelete('cascade')->onUpdate('cascade');
@@ -88,6 +85,11 @@ class CreateUsersTable extends Migration
 
         Schema::table('tps',function (Blueprint $table){
             $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade')->onUpdate('cascade');
+        });
+
+        Schema::table('users',function (Blueprint $table){
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('tps_id')->references('id')->on('tps')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::table('peoples',function (Blueprint $table){
