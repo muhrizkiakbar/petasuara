@@ -13,6 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('namarole');
+            $table->timestamps();
+        });
+        
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namauser')->nullable();
@@ -27,28 +33,13 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('peoples', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('noktp');
-            $table->string('nohp');
-            $table->unsignedInteger('tps_id');
-            $table->timestamps();
-        });
-
-        Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('namarole');
-            $table->timestamps();
-        });
-
         Schema::create('kabupatens', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namakabupaten');
             $table->timestamps();
 
         });
+
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('namakecamatan');
@@ -67,6 +58,16 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('namatps');
             $table->unsignedInteger('desa_id');
+            $table->timestamps();
+        });
+
+        Schema::create('peoples', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('noktp');
+            $table->string('nohp');
+            $table->unsignedInteger('tps_id');
             $table->timestamps();
         });
 
