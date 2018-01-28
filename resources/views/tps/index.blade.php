@@ -407,6 +407,10 @@
                     {data:'action'}
                 ]
             });
+
+            $('.kabupaten_id').select2();
+            $('.kecamatan_id').select2();
+            $('.desa_id').select2();
         });
     </script>
 
