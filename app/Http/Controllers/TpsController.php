@@ -98,7 +98,7 @@ class TpsController extends Controller
         ]);
 
         $table=new kabupaten;
-        $table->namakabupaten=$request->namakabupaten;
+        $table->namakabupaten=strtoupper($request->namakabupaten);
         $table->save();
 
         return redirect()->back();
@@ -112,7 +112,7 @@ class TpsController extends Controller
         ]);
 
         $table=new kecamatan();
-        $table->namakecamatan=$request->namakecamatan;
+        $table->namakecamatan=strtoupper($request->namakecamatan);
         $table->kabupaten_id=$request->kabupaten_id;
         $table->save();
         return redirect()->back();
@@ -125,7 +125,7 @@ class TpsController extends Controller
         ]);
 
         $table=new desa();
-        $table->namadesas=$request->namadesas;
+        $table->namadesas=strtoupper($request->namadesas);
         $table->kecamatan_id=$request->kecamatan_id;
         $table->save();
         return redirect()->back();
@@ -138,7 +138,7 @@ class TpsController extends Controller
         ]);
 
         $table=new tp();
-        $table->namatps=$request->namatps;
+        $table->namatps=strtoupper($request->namatps);
         $table->desa_id=$request->desa_id;
         $table->save();
         return redirect()->back();
@@ -157,7 +157,7 @@ class TpsController extends Controller
         ]);
         $id=decrypt($request->id);
         $table=kabupaten::find($id);
-        $table->namakabupaten=$request->namakabupaten;
+        $table->namakabupaten=strtoupper($request->namakabupaten);
         $table->save();
         return redirect('/lokasi');
     }
@@ -177,7 +177,7 @@ class TpsController extends Controller
         
         $id=decrypt($request->id);
         $table=kecamatan::find($id);
-        $table->namakecamatan=$request->namakecamatan;
+        $table->namakecamatan=strtoupper($request->namakecamatan);
         $table->kabupaten_id=$request->kabupaten_id;
         $table->save();
         return redirect('/lokasi');
@@ -200,7 +200,7 @@ class TpsController extends Controller
         
         $id=decrypt($request->id);
         $table=desa::find($id);
-        $table->namadesas=$request->namadesas;
+        $table->namadesas=strtoupper($request->namadesas);
         $table->kecamatan_id=$request->kecamatan_id;
         $table->save();
         return redirect('/lokasi');
@@ -225,7 +225,7 @@ class TpsController extends Controller
         
         $id=decrypt($request->id);
         $table=tp::find($id);
-        $table->namatps=$request->namatps;
+        $table->namatps=strtoupper($request->namatps);
         $table->desa_id=$request->desa_id;
         $table->save();
         return redirect('/lokasi');
