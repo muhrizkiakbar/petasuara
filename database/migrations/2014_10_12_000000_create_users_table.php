@@ -19,19 +19,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('namauser')->nullable();
-            $table->string('alamatuser')->nullable();
-            $table->string('noktpuser')->nullable();
-            $table->string('nohpuser')->nullable();
-            $table->unsignedInteger('tps_id')->nullable();
-            $table->string('username');
-            $table->unsignedInteger('role_id');
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        
 
         Schema::create('kabupatens', function (Blueprint $table) {
             $table->increments('id');
@@ -68,6 +56,20 @@ class CreateUsersTable extends Migration
             $table->string('noktp');
             $table->string('nohp');
             $table->unsignedInteger('tps_id');
+            $table->timestamps();
+        });
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('namauser')->nullable();
+            $table->string('alamatuser')->nullable();
+            $table->string('noktpuser')->nullable();
+            $table->string('nohpuser')->nullable();
+            $table->unsignedInteger('tps_id')->nullable();
+            $table->string('username');
+            $table->unsignedInteger('role_id');
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
 
