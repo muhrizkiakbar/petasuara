@@ -207,7 +207,7 @@
                                         <label>Kecamatan</label>
                                         <select class="form-control select2" id="kecamatan_id" name="kecamatan_id" style="width: 100%;">
                                             @foreach($kecamatans as $kecamatan)
-                                                <option value="{{$kecamatan->id}}">{{$kecamatan->namakecamatan}}</option>
+                                                <option value="{{$kecamatan->id}}">{{$kecamatan->namakabupaten}} - {{$kecamatan->namakecamatan}}</option>
                                             @endforeach
                                         </select>
                                         {{csrf_field()}}
@@ -288,7 +288,7 @@
                                         <label>Desa</label>
                                         <select class="form-control select2" id="desa_id" name="desa_id" style="width: 100%;">
                                             @foreach($desas as $desa)
-                                                <option value="{{$desa->id}}">{{$desa->namadesas}}</option>
+                                                <option value="{{$desa->id}}">{{$desa->namakabupaten}} - {{$desa->namakecamatan}} - {{$desa->namadesas}}</option>
                                             @endforeach
                                         </select>
                                         {{csrf_field()}}
