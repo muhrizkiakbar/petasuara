@@ -123,8 +123,8 @@ class UserController extends Controller
 
         return Datatables::of($users)
             ->addColumn('action', function ($users) {
-                return '<button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-username="'.$users->username.'" data-namauser="'.$users->namauser.'" data-tps_id="'.$users->tps_id.'" data-role_id="'.$users->role_id.'" data-id="'.$users->id.'" data-target="#modal_edit">Edit</button>
-                <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-username="'.$users->username.'" data-namauser="'.$users->namauser.'" data-tps="'.$users->tps_id.'" data-role="'.$users->role_id.'" data-id="'.$users->id.'" data-target="#modal_delete">Hapus</button>';
+                return '<button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-username="'.$users->username.'" data-namauser="'.$users->namauser.'" data-nohpuser="'.$users->nohpuser.'" data-noktpuser="'.$users->noktpuser.'" data-alamatuser="'.$users->alamatuser.'" data-tps_id="'.$users->tps_id.'" data-role_id="'.$users->role_id.'" data-id="'.$users->id.'" data-target="#modal_edit">Edit</button>
+                <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-username="'.$users->username.'" data-namauser="'.$users->namauser.'" data-nohpuser="'.$users->nohpuser.'" data-noktpuser="'.$users->noktpuser.'" data-alamatuser="'.$users->alamatuser.'" data-tps="'.$users->tps_id.'" data-role="'.$users->role_id.'" data-id="'.$users->id.'" data-target="#modal_delete">Hapus</button>';
             })
             ->make(true);
     }
@@ -151,8 +151,8 @@ class UserController extends Controller
     {
         //
         $rules=array(
-            'username'=>'required | min:3 | unique:users',
-            'role_id'=>'required',
+            // 'username'=>'required | min:3 | unique:users',
+            // 'role_id2'=>'required',
         );
 
         $validator=Validator::make(Input::all(),$rules);
@@ -167,6 +167,8 @@ class UserController extends Controller
             $nohpuser=$request->nohpuser2;
             $tps_id=$request->tps_id2;
             $role_id=$request->role_id2;
+
+            // dd($request);
 
             if (($namauser=="") || ($alamatuser=="") || ($noktpuser=="") || ($nohpuser=="") || ($tps_id=="")){
                 $user=User::where('username','=',$username)->first();

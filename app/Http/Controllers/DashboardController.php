@@ -37,8 +37,8 @@ class DashboardController extends Controller
                     ->leftJoin('desas','tps.desa_id','=','desas.id')
                     ->leftJoin('kecamatans','desas.kecamatan_id','=','kecamatans.id')
                     ->leftJoin('kabupatens','kecamatans.kabupaten_id','=','kabupatens.id')
-                    ->leftJoin('tps.id','=',Auth::user()->tps->id)
-                    ->select('namakabupaten','namakecamatan','namadesas','namatps','orangs.jumlah')
+                    ->where('tps.id','=',Auth::user()->tps->id)
+                    ->select('kabupatens.namakabupaten','kecamatans.namakecamatan','desas.namadesas','tps.*','orangs.jumlah')
                     ->get();
         }
         elseif (Auth::user()->role->namarole=="timdes"){
@@ -50,7 +50,7 @@ class DashboardController extends Controller
                     ->leftJoin('kecamatans','desas.kecamatan_id','=','kecamatans.id')
                     ->leftJoin('kabupatens','kecamatans.kabupaten_id','=','kabupatens.id')
                     ->where('desas.id','=',Auth::user()->tps->desa->id)
-                    ->select('namakabupaten','namakecamatan','namadesas','namatps','orangs.jumlah')
+                    ->select('kabupatens.namakabupaten','kecamatans.namakecamatan','desas.namadesas','tps.namatps','orangs.jumlah')
                     ->get();
         }
         elseif ((Auth::user()->role->namarole=="gubernur") || (Auth::user()->role->namarole=="superadmin")){
@@ -61,9 +61,11 @@ class DashboardController extends Controller
                     ->leftJoin('desas','tps.desa_id','=','desas.id')
                     ->leftJoin('kecamatans','desas.kecamatan_id','=','kecamatans.id')
                     ->leftJoin('kabupatens','kecamatans.kabupaten_id','=','kabupatens.id')
-                    ->select('namakabupaten','namakecamatan','namadesas','namatps','orangs.jumlah')
+                    ->select('kabupatens.namakabupaten','kecamatans.namakecamatan','desas.namadesas','tps.namatps','orangs.jumlah')
                     ->get();
         }
+
+        // dd($peoples);
         
     
         return Datatables::of($peoples)

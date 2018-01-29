@@ -148,7 +148,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input id="username2" name="username2" class="form-control pull-right" type="text">
+                                                <input id="username2" readonly name="username2" class="form-control pull-right" type="text">
+
                                             </div>
                                             {{csrf_field()}}
                                             <div class="form-group">
@@ -293,8 +294,9 @@
 
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            // alert($(this).data('username'));
             $('#username2').val($(this).data('username'));
-            $('#username2').attr('disabled','true');
+            // $('#username2').attr('disabled','true');
             $('#namauser2').val($(this).data('namauser'));
             $('#nohpuser2').val($(this).data('nohpuser'));
             $('#noktpuser2').val($(this).data('noktpuser'));
