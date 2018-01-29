@@ -7,7 +7,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <div class="login-logo">
-                <img src="/dist/img/logo.png" alt="">
+                <!-- <img src="/dist/img/logo.png" alt=""> -->
             </div>
             <div style="font-size: 35px;text-align: center;max-width: 100%;">
                 <strong>PETA SUARA</strong>
